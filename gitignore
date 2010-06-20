@@ -1,0 +1,18 @@
+# git-ls-files --others --exclude-from=.git/info/exclude
+# Lines that start with '#' are comments.
+# exclude patterns (uncomment them if you want to use them):
+.DS_Store
+*.pyc
+*.pyo
+*.[oa]
+*~
+*.lo
+*.la
+*.al
+.libs
+*.so
+*.so.[0-9]*
+.*.swp
+# This is our template for personal dev settings.
+personal_settings.py
+pip-log.txt
