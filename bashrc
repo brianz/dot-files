@@ -44,18 +44,17 @@ export EDITOR=vim
 # Screen stuff
 alias screen='TERM=screen screen'
 
-### brianz aliases 
+### brianz aliases
 alias ls='ls -G'
 alias l='ls -lF'
 alias la='ls -alF'
 alias lt='ls -lFt'
-alias p='pwd' 
-alias v='vim' 
+alias p='pwd'
+alias v='vim'
 alias c='clear'
 alias cd..='cd ..'
 alias gpp='g++'
 alias updb='sudo /usr/libexec/locate.updatedb'
-alias devdb='mysql -h dev.eventbrite.com -u event -p'
 alias stopmysql='sudo launchctl unload -w /Library/LaunchDaemons/com.mysql.mysqld.plist'
 alias startmysql='sudo launchctl load -w /Library/LaunchDaemons/com.mysql.mysqld.plist'
 alias startmemcache='sudo launchctl load -w /Library/LaunchDaemons/org.macports.memcached.plist'
