@@ -14,6 +14,9 @@ set softtabstop=4
 " set autoindent
 " set smartindent
 
+" Wrap text after a certain number of characters.  Do this for all file types.
+set textwidth=79
+
 hi Comment ctermfg=2
 
 set ruler
@@ -87,11 +90,6 @@ au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
 " Make trailing whitespace be flagged as bad.
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
-" Wrap text after a certain number of characters
-" Python: 79 
-" C: 79
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h set textwidth=79
-
 " Turn off settings in 'formatoptions' relating to comment formatting.
 " - c : do not automatically insert the comment leader when wrapping based on
 "    'textwidth'
@@ -107,6 +105,18 @@ au BufRead,BufNewFile *.c,*.h set formatoptions-=c formatoptions-=o formatoption
 " Python: yes
 " C: yes
 au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
+
+
+" rst docs
+" Make trailing whitespace be flagged as bad.
+au BufRead,BufNewFile *.rst match BadWhitespace /\s\+$/
+" Strip trailing whitespace on save
+au BufWritePre *.rst :%s/\s\+$//e
+
+" Bad whitespace for html, js and css
+au BufRead,BufNewFile *.html,*.css,*.js match BadWhitespace /^\t\+/
+au BufRead,BufNewFile *.html,*.css,*.js match BadWhitespace /\s\+$/
+au BufWritePre *.html,*.css,*.js :%s/\s\+$//e
 
 
 " ----------------------------------------------------------------------------

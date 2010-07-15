@@ -11,5 +11,7 @@
 	enabled = 1
 [merge]
 	tool = vimdiff
+#[core]
+	#autocrlf = input
 [user]
 	name = Brian Zambrano

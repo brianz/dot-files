@@ -1,5 +1,10 @@
 # .bashrc
 
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
 # User specific aliases and functions
 if [ -f $HOME/.profile ]; then
     . $HOME/.profile
@@ -7,6 +12,11 @@ fi
 # Key bindings
 if [ -f $HOME/.bash_key_bindings ]; then
     bind -f $HOME/.bash_key_bindings
+fi
+
+# Git autocomplete
+if [ -f $HOME/.git-completion ]; then
+    . $HOME/.git-completion
 fi
 
 # Virtualenv wrappers.  Make sure this directory has been created already.
@@ -36,7 +46,9 @@ PATH=$PATH:/usr/local/mysql/bin/:/usr/local/git/bin/:/usr/local/mongodb/bin
 # For macports...this should be the last item to modify the path
 export MANPATH=/opt/local/share/man:$MANPATH:/usr/local/mysql/man
 
-export PS1="\u@\h\$ "
+# Add the git state into the prompt
+export PS1='\u@\h $(__git_ps1 "(%s)")\$ '
+
 export TERM=xterm-color
 export SVN_EDITOR=vim
 export EDITOR=vim
@@ -71,6 +83,10 @@ function invoke-rc.d() {
 
     echo $cmd;
     `sudo $cmd`;
+}
+
+function grepsrc () {
+    find . -name "$1" | xargs egrep "$2";
 }
 
 
