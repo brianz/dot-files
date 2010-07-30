@@ -1,5 +1,4 @@
-" autocmd BufRead,BufNewFile *.py syntax on
-" autocmd BufRead,BufNewFile *.py set ai
+" set syntax on for all file types
 syntax on
 
 set number
