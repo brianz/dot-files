@@ -142,5 +142,13 @@ filetype indent on
 
 " Folding based on indentation: ``set foldmethod=indent``
 
+" highlight the current line & column - use \c to turn on
+hi CursorLine   cterm=NONE ctermbg=235
+hi CursorColumn cterm=NONE ctermbg=235
+nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+
+
+" -----------------------------------
+au BufNewFile,BufRead *.less set filetype=less
 
 " EOF
