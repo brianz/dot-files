@@ -1,0 +1,20 @@
+Host bz.github.com
+  HostName github.com
+  User git
+  IdentityFile /Users/brianz/.ssh/id_rsa
+
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile /Users/brianz/.ssh/id_rsa_bzeb
+
+Host evbdev
+  HostName 127.0.0.1
+  User vagrant
+  Port 2222
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile /Users/brianz/.vagrant.d/insecure_private_key
+  IdentitiesOnly yes
+  ForwardAgent yes
