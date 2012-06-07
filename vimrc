@@ -113,9 +113,9 @@ au BufRead,BufNewFile *.rst match BadWhitespace /\s\+$/
 au BufWritePre *.rst :%s/\s\+$//e
 
 " Bad whitespace for html, js and css
-au BufRead,BufNewFile *.html,*.css,*.js match BadWhitespace /^\t\+/
-au BufRead,BufNewFile *.html,*.css,*.js match BadWhitespace /\s\+$/
-au BufWritePre *.html,*.css,*.js :%s/\s\+$//e
+au BufRead,BufNewFile *.html,*.css,*.js,*.less match BadWhitespace /^\t\+/
+au BufRead,BufNewFile *.html,*.css,*.js,*.less match BadWhitespace /\s\+$/
+au BufWritePre *.html,*.css,*.js,*.less :%s/\s\+$//e
 
 
 " ----------------------------------------------------------------------------

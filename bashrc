@@ -19,13 +19,22 @@ if [ -f $HOME/.git-completion ]; then
     . $HOME/.git-completion
 fi
 
+PYTHONBIN=/Library/Frameworks/Python.framework/Versions/2.6/bin
+
 # Virtualenv wrappers.  Make sure this directory has been created already.
 export WORKON_HOME=$HOME/.virtualenvs
-source /usr/local/bin/virtualenvwrapper_bashrc
+if [ ! -d $WORKON_HOME ]; then
+    mkdir $WORKON_HOME
+fi
+if [ -f $PYTHONBIN/virtualenvwrapper.sh ]; then
+    source $PYTHONBIN/virtualenvwrapper.sh;
+fi
+
+# This is required to build certain things on OSX 10.6+
+# export ARCHFLAGS="-arch i386 -arch x86_64"
 
 # Pip
 export PIP_RESPECT_VIRTUALENV=true
-#export PIP_REQUIRE_VIRTUALENV=true
 # pip bash completion start
 _pip_completion()
 {
@@ -39,12 +48,17 @@ complete -o default -F _pip_completion pip
 export HISTFILESIZE=3000
 export LSCOLORS=cxfxcxdxbxegedabagacad
 
+export COPENSTACK_COMPUTE_USERNAME="TODO"
+export COPENSTACK_COMPUTE_API_KEY="TODO"
+
 # Add a few things
-PATH=$PATH:$HOME/bin:/usr/local/bin:/usr/local/sbin/
-PATH=$PATH:/usr/local/mysql/bin/:/usr/local/git/bin/:/usr/local/mongodb/bin
+PATH=$PATH:$HOME/bin:/usr/local/bin:$PYTHONBIN:/usr/local/git/bin/
 
 # For macports...this should be the last item to modify the path
 export MANPATH=/opt/local/share/man:$MANPATH:/usr/local/mysql/man
+
+# Java/Hadoop
+JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
 
 # Add the git state into the prompt
 export PS1='\u@\h $(__git_ps1 "(%s)")\$ '
@@ -74,20 +88,12 @@ alias stopmemcache='sudo launchctl unload -w /Library/LaunchDaemons/org.macports
 alias startrabbit='sudo launchctl load -w /Library/LaunchDaemons/org.macports.rabbitmq-server.plist'
 alias startmongo='sudo mongod --fork --dbpath /usr/local/mongodb/data --logpath /var/log/mongod.log --logappend'
 
-
-function invoke-rc.d() {
-    program="$1";
-    command="$2";
-    path="/Library/LaunchDaemons"
-    cmd="launchctl ${command} -w $path/org.macports.${program}.plist"
-
-    echo $cmd;
-    `sudo $cmd`;
-}
+if [ -d /usr/local/Cellar/clojure-contrib/1.2.0 ]; then
+    export CLASSPATH=$CLASSPATH:/usr/local/Cellar/clojure-contrib/1.2.0/clojure-contrib.jar
+fi
 
 function grepsrc () {
     find . -name "$1" | xargs egrep "$2";
 }
-
 
 # EOF
