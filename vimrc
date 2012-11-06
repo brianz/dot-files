@@ -55,7 +55,7 @@ au BufRead,BufNewFile *py,*pyw,*.c,*.h set tabstop=4
 au BufRead,BufNewFile *.html set tabstop=2
 
 " Strip trailing whitespace on save
-au BufWritePre *.py,*.pyw,*.c,*.h :%s/\s\+$//e
+au BufWritePre *.py,*.pyw,*.c,*.h,*.sh :%s/\s\+$//e
 
 " What to use for an indent.
 " This will affect Ctrl-T and 'autoindent'.
@@ -87,7 +87,7 @@ highlight BadWhitespace ctermbg=red guibg=red
 " Display tabs at the beginning of a line in Python mode as bad.
 au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
 " Make trailing whitespace be flagged as bad.
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h,*.sh match BadWhitespace /\s\+$/
 
 " Turn off settings in 'formatoptions' relating to comment formatting.
 " - c : do not automatically insert the comment leader when wrapping based on
