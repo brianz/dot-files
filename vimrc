@@ -30,6 +30,9 @@ set completeopt=longest
 map ,# :s/^/#/<CR><Esc>:nohlsearch<CR>
 map ,!# :s/^#//<CR><Esc>:nohlsearch<CR>
 
+map \l :set number!<CR>
+map \o :set paste!<CR>
+
 " vimrc file for following the coding standards specified in PEP 7 & 8.
 "
 " To use this file, source it in your own personal .vimrc file (``source

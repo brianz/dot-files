@@ -20,6 +20,8 @@ if [ -f $HOME/.git-completion ]; then
 fi
 
 PYTHONBIN=/Library/Frameworks/Python.framework/Versions/2.6/bin
+# Set Python warnings back to the default level for Python 2.7+
+export PYTHONWARNINGS="d"
 
 # Virtualenv wrappers.  Make sure this directory has been created already.
 export WORKON_HOME=$HOME/.virtualenvs
