@@ -3,6 +3,7 @@
     co = checkout
     br = branch
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	up = "!git fetch -p; git merge --ff-only @{u}"
 [gc]
 	auto = 1
 [color]
@@ -16,3 +17,5 @@
 [user]
 	name = Brian Zambrano
 	email = brianz@gmail.com
+[push]
+	default = simple
