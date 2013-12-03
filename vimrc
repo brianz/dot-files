@@ -115,10 +115,10 @@ au BufRead,BufNewFile *.rst match BadWhitespace /\s\+$/
 " Strip trailing whitespace on save
 au BufWritePre *.rst :%s/\s\+$//e
 
-" Bad whitespace for html, js and css
-au BufRead,BufNewFile *.html,*.css,*.js,*.less match BadWhitespace /^\t\+/
-au BufRead,BufNewFile *.html,*.css,*.js,*.less match BadWhitespace /\s\+$/
-au BufWritePre *.html,*.css,*.js,*.less :%s/\s\+$//e
+" Bad whitespace for html, js, css and yaml
+au BufRead,BufNewFile *.html,*.css,*.js,*.less,*.yml match BadWhitespace /^\t\+/
+au BufRead,BufNewFile *.html,*.css,*.js,*.less,*.yml match BadWhitespace /\s\+$/
+au BufWritePre *.html,*.css,*.js,*.less,*.yml :%s/\s\+$//e
 
 
 " ----------------------------------------------------------------------------
