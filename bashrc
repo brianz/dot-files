@@ -16,10 +16,11 @@ fi
 
 # Git autocomplete
 if [ -f $HOME/.git-completion ]; then
-    . $HOME/.git-completion
+    source $HOME/.git-completion
+    source $HOME/.git-prompt
 fi
 
-PYTHONBIN=/Library/Frameworks/Python.framework/Versions/2.6/bin
+PYTHONBIN=/Library/Frameworks/Python.framework/Versions/2.7/bin
 # Set Python warnings back to the default level for Python 2.7+
 export PYTHONWARNINGS="d"
 
@@ -28,8 +29,14 @@ export WORKON_HOME=$HOME/.virtualenvs
 if [ ! -d $WORKON_HOME ]; then
     mkdir $WORKON_HOME
 fi
-if [ -f $PYTHONBIN/virtualenvwrapper.sh ]; then
-    source $PYTHONBIN/virtualenvwrapper.sh;
+
+VENV_SH=/usr/local/bin/virtualenvwrapper.sh
+if [ -f $VENV_SH ]; then
+    source $VENV_SH;
+fi
+
+if [ -f $HOME/.bbucket ]; then
+    source $HOME/.bbucket
 fi
 
 # This is required to build certain things on OSX 10.6+
@@ -54,7 +61,7 @@ export COPENSTACK_COMPUTE_USERNAME="TODO"
 export COPENSTACK_COMPUTE_API_KEY="TODO"
 
 # Add a few things
-PATH=$PATH:$HOME/bin:/usr/local/bin:$PYTHONBIN:/usr/local/git/bin/
+PATH=/usr/local/git/bin:/usr/local/bin:$HOME/.rvm/bin:$PATH:$HOME/bin:$PYTHONBIN
 
 # For macports...this should be the last item to modify the path
 export MANPATH=/opt/local/share/man:$MANPATH:/usr/local/mysql/man
@@ -64,6 +71,7 @@ JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
 
 # Add the git state into the prompt
 export PS1='\u@\h $(__git_ps1 "(%s)")\$ '
+GIT_PS1_SHOWUPSTREAM="auto"
 
 export TERM=xterm-color
 export SVN_EDITOR=vim
@@ -83,12 +91,16 @@ alias c='clear'
 alias cd..='cd ..'
 alias gpp='g++'
 alias updb='sudo /usr/libexec/locate.updatedb'
-alias stopmysql='sudo launchctl unload -w /Library/LaunchDaemons/com.mysql.mysqld.plist'
-alias startmysql='sudo launchctl load -w /Library/LaunchDaemons/com.mysql.mysqld.plist'
+alias stopmysql='launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist'
+alias startmysql='launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist'
 alias startmemcache='sudo launchctl load -w /Library/LaunchDaemons/org.macports.memcached.plist'
 alias stopmemcache='sudo launchctl unload -w /Library/LaunchDaemons/org.macports.memcached.plist'
 alias startrabbit='sudo launchctl load -w /Library/LaunchDaemons/org.macports.rabbitmq-server.plist'
-alias startmongo='sudo mongod --fork --dbpath /usr/local/mongodb/data --logpath /var/log/mongod.log --logappend'
+alias vg='vagrant'
+alias vup='vagrant up'
+alias vdown='vagrant suspend'
+alias cleanpyc="find . -name '*.pyc' | xargs rm"
+alias list_ports="netstat -lnptu"
 
 if [ -d /usr/local/Cellar/clojure-contrib/1.2.0 ]; then
     export CLASSPATH=$CLASSPATH:/usr/local/Cellar/clojure-contrib/1.2.0/clojure-contrib.jar
