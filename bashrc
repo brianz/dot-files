@@ -57,8 +57,18 @@ complete -o default -F _pip_completion pip
 export HISTFILESIZE=3000
 export LSCOLORS=cxfxcxdxbxegedabagacad
 
-export COPENSTACK_COMPUTE_USERNAME="TODO"
-export COPENSTACK_COMPUTE_API_KEY="TODO"
+# Rackspace cloud
+export RACKSPACE_USERNAME='TODO'
+export RACKSPACE_KEY='TODO'
+
+export NEWRELIC='TODO'
+
+# AWS stuff
+export AWS_ACCESS_KEY_ID='TODO'
+export AWS_SECRET_ACCESS_KEY='TODO'
+
+# Django
+export DJANGO_SETTINGS_MODULE=settings.bz
 
 # Add a few things
 PATH=/usr/local/git/bin:/usr/local/bin:$HOME/.rvm/bin:$PATH:$HOME/bin:$PYTHONBIN
@@ -70,7 +80,7 @@ export MANPATH=/opt/local/share/man:$MANPATH:/usr/local/mysql/man
 JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
 
 # Add the git state into the prompt
-export PS1='\u@\h $(__git_ps1 "(%s)")\$ '
+export PS1='\u@\h$(__git_ps1 "(%s)")\$ '
 GIT_PS1_SHOWUPSTREAM="auto"
 
 export TERM=xterm-color
@@ -79,6 +89,10 @@ export EDITOR=vim
 
 # Screen stuff
 alias screen='TERM=screen screen'
+
+# Hack in the psswds for mysql
+alias mysql='mysql -pTODO'
+alias mysqldump='mysqldump -pTODO'
 
 ### brianz aliases
 alias ls='ls -G'
@@ -109,5 +123,3 @@ fi
 function grepsrc () {
     find . -name "$1" | xargs egrep "$2";
 }
-
-# EOF
