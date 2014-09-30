@@ -1,6 +1,8 @@
 " set syntax on for all file types
 syntax on
 
+execute pathogen#infect()
+
 set number
 set showmode
 
@@ -116,9 +118,9 @@ au BufRead,BufNewFile *.rst match BadWhitespace /\s\+$/
 au BufWritePre *.rst :%s/\s\+$//e
 
 " Bad whitespace for html, js, css and yaml
-au BufRead,BufNewFile *.html,*.css,*.js,*.less,*.yml match BadWhitespace /^\t\+/
-au BufRead,BufNewFile *.html,*.css,*.js,*.less,*.yml match BadWhitespace /\s\+$/
-au BufWritePre *.html,*.css,*.js,*.less,*.yml :%s/\s\+$//e
+au BufRead,BufNewFile *.html,*.css,*.js,*.less,*.yml,*.sls match BadWhitespace /^\t\+/
+au BufRead,BufNewFile *.html,*.css,*.js,*.less,*.yml,*.sls match BadWhitespace /\s\+$/
+au BufWritePre *.html,*.css,*.js,*.less,*.yml,*.sls :%s/\s\+$//e
 
 
 " ----------------------------------------------------------------------------
@@ -154,4 +156,5 @@ nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 " -----------------------------------
 au BufNewFile,BufRead *.less set filetype=less
 
-" EOF
+" set syntax for salt/sls files
+au BufNewFile,BufRead *.sls set filetype=yaml shiftwidth=2 tabstop=2
