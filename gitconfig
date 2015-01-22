@@ -12,10 +12,8 @@
 	enabled = 1
 [merge]
 	tool = vimdiff
-#[core]
-	#autocrlf = input
 [user]
-	name = Brian Zambrano
-	email = brianz@gmail.com
+	name = Your Name
+	email = you@gmail.com
 [push]
 	default = simple
