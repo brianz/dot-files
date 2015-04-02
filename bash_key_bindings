@@ -1,2 +1,4 @@
 "\C-f": forward-word
 "\C-b": backward-word
+# Quote the current or previous word
+"\C-xq": "\eb\"\ef\""
