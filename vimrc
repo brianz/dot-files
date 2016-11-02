@@ -18,6 +18,11 @@ Plugin 'fatih/vim-go'
 Plugin 'leafgarland/typescript-vim'
 " Bundle 'Rykka/riv.vim'
 
+Plugin 'mxw/vim-jsx'
+
+Plugin 'elixir-lang/vim-elixir'
+
+Plugin 'lambdatoast/elm.vim'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
@@ -72,6 +77,7 @@ set showmatch
 
 set hlsearch
 let loaded_matchparen = 1
+set complete-=i
 set completeopt=longest
 
 
@@ -103,19 +109,19 @@ map \o :set paste!<CR>
 " For the amount of space used for a new tab use shiftwidth.
 au BufRead,BufNewFile *py,*pyw,*.c,*.h set tabstop=4
 " 
-" Now for html
-au BufRead,BufNewFile *.html set tabstop=2
+" Now for html and js
+au BufRead,BufNewFile *.html,*.js,*.jsx,*.scss,*.jade set tabstop=2
 
 " Strip trailing whitespace on save
-au BufWritePre *.py,*.pyw,*.c,*.h,*.sh :%s/\s\+$//e
+au BufWritePre *.py,*.pyw,*.c,*.h,*.sh,*.js,*.jsx,*.scss,*.jade,*.rb :%s/\s\+$//e
 
 " What to use for an indent.
 " This will affect Ctrl-T and 'autoindent'.
 " Python: 4 spaces
 " C: tabs (pre-existing files) or 4 spaces (new files)
 au BufRead,BufNewFile *.py,*pyw set shiftwidth=4
-" HTML
-au BufRead,BufNewFile *.html set shiftwidth=2
+" HTML/js/web/ruby
+au BufRead,BufNewFile *.html,*.js,*.jsx,*.scss,*.jade,*.rb set shiftwidth=2
 
 " This should be redundant since we're already setting tabstop and shifwidth,
 " but leave it in for explicitness.
@@ -164,10 +170,10 @@ au BufRead,BufNewFile *.rst match BadWhitespace /\s\+$/
 " Strip trailing whitespace on save
 au BufWritePre *.rst :%s/\s\+$//e
 
-" Bad whitespace for html, js, css and yaml
-au BufRead,BufNewFile *.html,*.css,*.js,*.less,*.yml,*.sls match BadWhitespace /^\t\+/
-au BufRead,BufNewFile *.html,*.css,*.js,*.less,*.yml,*.sls match BadWhitespace /\s\+$/
-au BufWritePre *.html,*.css,*.js,*.less,*.yml,*.sls :%s/\s\+$//e
+" Bad whitespace for html, js, css, yaml, etc.
+au BufRead,BufNewFile *.html,*.css,*.js,*.jsx,*.scss,*.less,*.yml,*.sls match BadWhitespace /^\t\+/
+au BufRead,BufNewFile *.html,*.css,*.js,*.jsx,*.scss,*.less,*.yml,*.sls match BadWhitespace /\s\+$/
+au BufWritePre *.html,*.css,*.js,*.jsx,*.scss,*.less,*.yml,*.sls :%s/\s\+$//e
 
 
 " ----------------------------------------------------------------------------
@@ -209,5 +215,3 @@ au BufNewFile,BufRead *.json set filetype=javascript shiftwidth=2 tabstop=2
 
 " set syntax for jinja files
 au BufNewFile,BufRead *.j2,*.jinja set filetype=jinja shiftwidth=2 tabstop=2
-
-
