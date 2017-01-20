@@ -7,37 +7,37 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-Plugin 'fatih/vim-go'
-
-Plugin 'leafgarland/typescript-vim'
-" Bundle 'Rykka/riv.vim'
-
-Plugin 'mxw/vim-jsx'
-
+" Plugin 'SirVer/ultisnips'
+" Plugin 'christoomey/vim-tmux-navigator'
+" Plugin 'itchyny/lightline.vim'
+"Plugin 'honza/vim-snippets'
+"Plugin 'isRuslan/vim-es6'
+Plugin 'ConradIrwin/vim-bracketed-paste'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'elixir-lang/vim-elixir'
-
+Plugin 'fatih/vim-go'
+Plugin 'hail2u/vim-css3-syntax'
 Plugin 'lambdatoast/elm.vim'
-
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
-" Git plugin not hosted on GitHub
-" Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
-" Plugin 'user/L9', {'name': 'newL9'}
+Plugin 'mxw/vim-jsx'
+Plugin 'tomtom/tcomment_vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
+
+" Set ultisnips triggers
+" let g:UltiSnipsExpandTrigger="<tab>"                                            
+" let g:UltiSnipsJumpForwardTrigger="<tab>"                                       
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>" 
+
+" used with lightline
+" set laststatus=2
+" if !has('gui_running')
+    " set t_Co=256
+" endif
+
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -51,21 +51,25 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-
 " set syntax on for all file types
-syntax on
+syntax enable
 
 set number
 set showmode
 
-" default indentation handling
-set tabstop=4
-set shiftwidth=4
-set smarttab
+set autoindent
+
+" Insert spaces whenever "tab" is pressed
 set expandtab
+" 4 spaces for a tab
+set tabstop=4
+" spaces for indentation
+set shiftwidth=4
+"  makes the backspace key treat the four spaces like a tab (so one backspace goes back a full 4 spaces).
 set softtabstop=4
-" set autoindent
-" set smartindent
+
+" make backspaces more powerfull
+set backspace=indent,eol,start
 
 " Wrap text after a certain number of characters.  Do this for all file types.
 set textwidth=99
@@ -80,10 +84,10 @@ let loaded_matchparen = 1
 set complete-=i
 set completeopt=longest
 
-
-" Shortcuts
-map ,# :s/^/#/<CR><Esc>:nohlsearch<CR>
-map ,!# :s/^#//<CR><Esc>:nohlsearch<CR>
+" Shortcuts 
+" these are old comment shortcuts which are superceded by gc plugin
+" map ,# :s/^/#/<CR><Esc>:nohlsearch<CR>
+" map ,!# :s/^#//<CR><Esc>:nohlsearch<CR>
 
 map \l :set number!<CR>
 map \o :set paste!<CR>
@@ -163,7 +167,6 @@ au BufRead,BufNewFile *.c,*.h set formatoptions-=c formatoptions-=o formatoption
 " C: yes
 au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
 
-
 " rst docs
 " Make trailing whitespace be flagged as bad.
 au BufRead,BufNewFile *.rst match BadWhitespace /\s\+$/
@@ -180,8 +183,6 @@ au BufWritePre *.html,*.css,*.js,*.jsx,*.scss,*.less,*.yml,*.sls :%s/\s\+$//e
 " The following section contains suggested settings.  While in no way required
 " to meet coding standards, they are helpful.
 
-" Set the default file encoding to UTF-8: ``set encoding=utf-8``
-
 " Puts a marker at the beginning of the file to differentiate between UTF and
 " UCS encoding (WARNING: can trick shells into thinking a text file is actually
 " a binary file when executing the text file): ``set bomb``
@@ -191,25 +192,29 @@ au BufWritePre *.html,*.css,*.js,*.jsx,*.scss,*.less,*.yml,*.sls :%s/\s\+$//e
 
 " Automatically indent based on file type:
 filetype indent on
-" These two are "dumb" indenters
-" Keep indentation level from previous line: 
-" set autoindent
-" Automatically inserts one extra level of indentation in some cases
-" set smartindent
-
 
 " Folding based on indentation: ``set foldmethod=indent``
 
 " highlight the current line & column - use \c to turn on
-hi CursorLine   cterm=NONE ctermbg=235
-hi CursorColumn cterm=NONE ctermbg=235
-nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+" hi CursorLine   cterm=NONE ctermbg=235
+" hi CursorColumn cterm=NONE ctermbg=235
+" nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+
+" Highlight the current line
+set cursorline
+" Set cursorline colors
+" hi CursorLine ctermbg=235
+" Set color of number column on cursorline
+" hi CursorLineNR ctermbg=235 ctermfg=221
+" Set line number color in left tray
+hi LineNr ctermfg=220
 
 " -----------------------------------
 au BufNewFile,BufRead *.less set filetype=less
 
 " set syntax for salt/sls files
-au BufNewFile,BufRead *.sls set filetype=yaml shiftwidth=2 tabstop=2
+au BufNewFile,BufRead *.sls,*.yml set filetype=yaml shiftwidth=2 tabstop=2
+au BufNewFile,BufRead *.yaml,*.yml so ~/.vim/yaml.vim
 
 au BufNewFile,BufRead *.json set filetype=javascript shiftwidth=2 tabstop=2
 
