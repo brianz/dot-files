@@ -4,33 +4,37 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" Add homebrew fzf to path
+set rtp+=/usr/local/opt/fzf
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-" Plugin 'SirVer/ultisnips'
 " Plugin 'christoomey/vim-tmux-navigator'
 " Plugin 'itchyny/lightline.vim'
 "Plugin 'honza/vim-snippets'
 "Plugin 'isRuslan/vim-es6'
 Plugin 'ConradIrwin/vim-bracketed-paste'
-Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'fatih/vim-go'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'lambdatoast/elm.vim'
 Plugin 'mxw/vim-jsx'
+Plugin 'tomlion/vim-solidity'
 Plugin 'tomtom/tcomment_vim'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'w0rp/ale'
+Plugin 'junegunn/fzf.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
-
-" Set ultisnips triggers
-" let g:UltiSnipsExpandTrigger="<tab>"                                            
-" let g:UltiSnipsJumpForwardTrigger="<tab>"                                       
-" let g:UltiSnipsJumpBackwardTrigger="<s-tab>" 
 
 " used with lightline
 " set laststatus=2
@@ -38,7 +42,42 @@ call vundle#end()            " required
     " set t_Co=256
 " endif
 
+" set leader to space
+let g:mapleader = "\<space>"
+
+" let g:ale_open_list = 1
+
+let g:ale_python_auto_pipenv = 1
+" let g:ale_python_flake8_auto_pipenv = 1
+" let g:ale_python_pylint_auto_pipenv = 1
+
+let g:ale_cache_executable_check_failures = 1
+let g:ale_set_quickfix = 1
+let g:ale_history_log_output = 1
+let g:ale_linters = {
+      \ 'elixir': ['elixir', 'credo', 'mix'],
+      \ 'python': ['flake8', 'pylint'],
+      \}
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {
+      \ 'elixir': ['mix_format'],
+      \ 'elm': ['format'],
+      \ 'python': ['yapf'],
+      \ 'javascript': ['prettier'],
+      \}
+
+
+" FZF stuff
+nnoremap <Leader>o :Files<cr>
+nnoremap <Leader>s :Find
+
+command! -bang -nargs=* Find call fzf#vim#grep(
+      \ 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow '.$RG_IGNORE.' --color "always" '.shellescape(<q-args>), 1, <bang>0)
+
+
+
 filetype plugin indent on    " required
+
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
@@ -56,8 +95,9 @@ syntax enable
 
 set number
 set showmode
-
 set autoindent
+
+set directory=$HOME/.vimswp//
 
 " Insert spaces whenever "tab" is pressed
 set expandtab
@@ -83,6 +123,9 @@ set hlsearch
 let loaded_matchparen = 1
 set complete-=i
 set completeopt=longest
+
+" yanking text goes to the system clipboard
+" set clipboard=unnamed
 
 " Shortcuts 
 " these are old comment shortcuts which are superceded by gc plugin
@@ -117,7 +160,7 @@ au BufRead,BufNewFile *py,*pyw,*.c,*.h set tabstop=4
 au BufRead,BufNewFile *.html,*.js,*.jsx,*.scss,*.jade set tabstop=2
 
 " Strip trailing whitespace on save
-au BufWritePre *.py,*.pyw,*.c,*.h,*.sh,*.js,*.jsx,*.scss,*.jade,*.rb :%s/\s\+$//e
+au BufWritePre *.py,*.pyw,*.c,*.h,*.sh,*.js,*.jsx,*.scss,*.jade,*.rb,*.ex,*.exs :%s/\s\+$//e
 
 " What to use for an indent.
 " This will affect Ctrl-T and 'autoindent'.
@@ -125,7 +168,7 @@ au BufWritePre *.py,*.pyw,*.c,*.h,*.sh,*.js,*.jsx,*.scss,*.jade,*.rb :%s/\s\+$//
 " C: tabs (pre-existing files) or 4 spaces (new files)
 au BufRead,BufNewFile *.py,*pyw set shiftwidth=4
 " HTML/js/web/ruby
-au BufRead,BufNewFile *.html,*.js,*.jsx,*.scss,*.jade,*.rb set shiftwidth=2
+au BufRead,BufNewFile *.html,*.js,*.jsx,*.ts,*.tsx,*.scss,*.jade,*.rb set shiftwidth=2
 
 " This should be redundant since we're already setting tabstop and shifwidth,
 " but leave it in for explicitness.
@@ -149,7 +192,7 @@ highlight BadWhitespace ctermbg=red guibg=red
 " Display tabs at the beginning of a line in Python mode as bad.
 au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
 " Make trailing whitespace be flagged as bad.
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h,*.sh match BadWhitespace /\s\+$/
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h,*.sh,*.ex,*.exs match BadWhitespace /\s\+$/
 
 " Turn off settings in 'formatoptions' relating to comment formatting.
 " - c : do not automatically insert the comment leader when wrapping based on
@@ -174,9 +217,9 @@ au BufRead,BufNewFile *.rst match BadWhitespace /\s\+$/
 au BufWritePre *.rst :%s/\s\+$//e
 
 " Bad whitespace for html, js, css, yaml, etc.
-au BufRead,BufNewFile *.html,*.css,*.js,*.jsx,*.scss,*.less,*.yml,*.sls match BadWhitespace /^\t\+/
-au BufRead,BufNewFile *.html,*.css,*.js,*.jsx,*.scss,*.less,*.yml,*.sls match BadWhitespace /\s\+$/
-au BufWritePre *.html,*.css,*.js,*.jsx,*.scss,*.less,*.yml,*.sls :%s/\s\+$//e
+au BufRead,BufNewFile *.html,*.css,*.js,*.jsx,*.ts,*.tsx,*.scss,*.less,*.yml,*.sls match BadWhitespace /^\t\+/
+au BufRead,BufNewFile *.html,*.css,*.js,*.jsx,*.ts,*.tsx,*.scss,*.less,*.yml,*.sls match BadWhitespace /\s\+$/
+au BufWritePre *.html,*.css,*.js,*.jsx,*.ts,*.tsx,*.scss,*.less,*.yml,*.sls :%s/\s\+$//e
 
 
 " ----------------------------------------------------------------------------
@@ -216,7 +259,22 @@ au BufNewFile,BufRead *.less set filetype=less
 au BufNewFile,BufRead *.sls,*.yml set filetype=yaml shiftwidth=2 tabstop=2
 au BufNewFile,BufRead *.yaml,*.yml so ~/.vim/yaml.vim
 
-au BufNewFile,BufRead *.json set filetype=javascript shiftwidth=2 tabstop=2
+" au BufNewFile,BufRead *.json set filetype=javascript shiftwidth=2 tabstop=2
 
 " set syntax for jinja files
 au BufNewFile,BufRead *.j2,*.jinja set filetype=jinja shiftwidth=2 tabstop=2
+
+set list
+set listchars=tab:▸\
+
+nnoremap <silent> gl "_yiw?\w\+\_W\+\%#<CR>:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><c-o><c-l>:nohlsearch<CR>
+nnoremap <silent> gr "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><c-o>/\w\+\_W\+<CR><c-l>:nohlsearch<CR>
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+set laststatus=2
+set statusline=%t
